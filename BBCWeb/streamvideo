@@ -1,0 +1,30 @@
+#!/bin/bash -x
+REMOTENAME=$1
+LOCALNAME=$2
+
+for j in 1 2; do
+  for i in 1 2 3 4 5 6; do
+    outfile=${LOCALNAME}_0${j}x0${i}
+    if [ -e ${outfile}.avi ]; then
+      echo Â${outfile}.avi already exists. Skipping
+    else
+      infile1=rtsp://rmv8.bbc.net.uk/comedy/${REMOTENAME}/bb/${REMOTENAME}_s${j}ep${i}_16x9_bb.rm
+      infile2=rtsp://rmgeo.bbc.net.uk/bbcthree/${REMOTENAME}/bb/${REMOTENAME}_s0${j}_ep0${i}_16x9_bb.rm
+      for infile in ${infile1} ${infile2}; do
+        if [ -e ${outfile}.avi ]; then
+          echo Â${outfile}.avi already exists. Skipping
+        else
+          if [ -e ${outfile}.rm ]; then
+            echo ${outfile}.rm already exists. Skipping download.
+          else
+            mplayer -prefer-ipv4 -noframedrop -dumpfile ${outfile}.rm -dumpstream ${infile}
+          fi
+          mencoder ${outfile}.rm -ovc lavc -oac pcm -o ${outfile}.avi
+          if [ -e ${outfile}.avi ]; then
+            rm ${outfile}.rm
+          fi
+        fi
+      done
+    fi
+  done
+done

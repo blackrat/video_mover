@@ -1,0 +1,40 @@
+require 'ftools'
+libdir=$:.max
+LIBLIST=["Video.rb","String.rb","TitleCase.rb","Video.rb","withindex.rb","Filename.rb"]
+datadir="/etc"
+DATALIST=["extractdata"]
+bindir="/usr/local/bin"
+BINLIST=["movevideo","moveall"]
+
+desc "Install MLDonkeyMove application"
+task :install => [:libfiles,:datafiles,:binfiles]
+
+desc "Install library files"
+file :libfiles => LIBLIST.map { |x| File.join(libdir,x) }
+
+desc "Install data files"
+file :datafiles => DATALIST.map { |x| File.join(datadir,x) }
+
+desc "Install executable"
+file :binfiles => BINLIST.map { |x| File.join(bindir,x) }
+
+desc "Run tests"
+task :test do
+  ruby "Video_Test.rb"
+end
+
+
+rule(/#{libdir}.*/ => [proc{|task_name| task_name.sub(/#{libdir}./,'')}]) do |t|
+	puts "Copying #{t.source} to #{t.name}."
+	File.copy(t.source,t.name)
+end
+
+rule(/#{datadir}.*/ => [proc{|task_name| task_name.sub(/#{datadir}./,'')}]) do |t|
+	puts "Copying #{t.source} to #{t.name}."
+	File.copy(t.source,t.name)
+end
+
+rule(/#{bindir}.*/ => [proc{|task_name| task_name.sub(/#{bindir}./,'')}]) do |t|
+	puts "Copying #{t.source} to #{t.name}."
+	File.copy(t.source,t.name)
+end

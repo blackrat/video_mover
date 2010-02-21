@@ -1,0 +1,70 @@
+#!/usr/bin/env ruby
+#
+#  Created by Paul McKibbin on 2006-11-05.
+#  Copyright (c) 2006. All rights reserved.
+
+MLINCOMING="/vault/med01/home/mldonkey/incoming/files"
+LOG_FILE="/var/log/mldonkey/movevideo.log"
+EXTRACT_FILE="/etc/extractdata"
+LIST_FILE="/vault/med01/home/mldonkey/incoming/downloads.list"
+
+require "logger"
+logfile=File.expand_path(LOG_FILE)
+begin
+    Log=Logger.new(logfile, shift_age='weekly')
+rescue => e
+    Log=Logger.new(STDOUT)
+    Log.error {e.message + ". Logging to stdout."}
+end
+Log.info {"#{$0} starting."}
+
+require "Filename"
+require "Video"
+
+if ARGV.length != 3
+    hash=0
+    size=File.size(ARGV[0])
+    src_dir=File.dirname(ARGV[0])
+    src=File.basename(ARGV[0])
+else
+    hash=ARGV[0]
+    size=ARGV[1]
+    src=ARGV[2]
+    src_dir=MLINCOMING
+    if hash=="0" then
+        src_dir=File.dirname(ARGV[2])
+        src=File.basename(ARGV[2])
+    end
+end
+Log.info {"Hash: #{hash}"}
+Log.info {"Size: #{size}"}
+Log.info {"Src:  #{File.join(src_dir,src)}"}
+
+if File.exists?(File.join(src_dir,src)) then
+    Log.info {"Analysing #{src}."}
+    extractfile=File.expand_path(EXTRACT_FILE)
+    mldonkey_file=MLDonkeyFilename.new(hash,size,src,src_dir)
+    Log.info {"Found #{src} to be a #{mldonkey_file.filetype}."}
+    src=case mldonkey_file.filetype
+	when :tv: TVEpisode.new(mldonkey_file.fullname,extractfile)
+	when :video: Video.new(mldonkey_file.fullname,extractfile)
+	when :movie: Movie.new(mldonkey_file.fullname,extractfile)
+     when :audio: Audio.new(mldonkey_file.fullname,extractfile)
+	else
+	    Log.warn {"Error determining file type #{mldonkey_file.filetype}."}
+	    nil
+    end
+    if !src.nil?
+	src.moveto(src.base_dir)
+	begin
+	    File.open(LIST_FILE,"a") {|f| f << src.fullname << "\n" }
+	rescue => e
+	    Log.info {"#{e.message}. Unable to write to #{LIST_FILE}."}
+	end
+	src.linkto(src.link_dir)
+    end
+else
+    Log.debug {"Unable to find file #{src}"}
+end
+
+Log.info {"#{$0} completed."}

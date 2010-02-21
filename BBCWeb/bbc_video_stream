@@ -1,0 +1,59 @@
+#!/usr/bin/env ruby
+#
+#  Created by Paul McKibbin on 2006-11-05.
+#  Copyright (c) 2006. All rights reserved.
+
+MLINCOMING="/vault/nas01/home/mldonkey/incoming/files"
+LOG_FILE="/var/log/mldonkey/movevideo.log"
+EXTRACT_FILE="/etc/extractdata"
+LIST_FILE="/home/mldonkey/incoming/downloads.list"
+
+require "logger"
+require "Filename"
+require "Video"
+
+logfile=File.expand_path(LOG_FILE)
+Log=Logger.new(logfile, shift_age='weekly')
+Log.info "#{$0} starting."
+
+if ARGV.length != 3
+  src_dir="."
+  hash=0
+  src=ARGV[0]
+  size=File.size(src)
+else
+  hash=ARGV[0]
+  size=ARGV[1]
+  src=ARGV[2]
+  src_dir=MLINCOMING
+  if hash=="0" then 
+	src_dir="."
+  end
+end  
+  Log.info "Hash: #{hash}"
+  Log.info "Size: #{size}"
+  Log.info "Src:  #{src}"
+
+  if File.exists?(File.join(src_dir,src)) then
+    Log.info "Analysing #{src}."
+    extractfile=File.expand_path(EXTRACT_FILE)
+    mldonkey_file=MLDonkeyFilename.new(hash,size,src,src_dir)
+    Log.info "Found #{src} to be a #{mldonkey_file.filetype}."
+    src=case mldonkey_file.filetype
+      when :tv: TVEpisode.new(mldonkey_file.fullname,extractfile)
+      when :video: Video.new(mldonkey_file.fullname,extractfile)
+      when :movie: Movie.new(mldonkey_file.fullname,extractfile)
+      else
+        Log.warn "Error determining file type #{mldonkey_file.filetype}."
+    end
+    Log.info "Preparing to move #{src.fullname} to " + File.join(src.base_dir,src.normalized_filename+src.extension) + "."    
+    src.moveto(src.base_dir)
+    File.open(LIST_FILE,"a") {|f| f << src.fullname << "\n" }
+    Log.info "Preparing to link #{src.fullname} to " + File.join(src.link_dir,src.normalized_filename+src.extension) + "."    
+    src.linkto(src.link_dir)
+  else
+    Log.debug "Unable to find file #{src}"
+  end
+
+
+Log.info "#{$0} completing."
