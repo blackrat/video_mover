@@ -24,14 +24,14 @@ GNU_DATE=/bin/date
 MKDIR=/bin/mkdir
 
 ##########################################################################################
-# Functions
+# Functions 
 ##########################################################################################
 
 ##########################################################################################
 #Function:	set_init_value
 #Description:	return the value or the default value of a parameter
 #
-#Requires:
+#Requires:	
 #Externals:
 #Input:		$1 variable to change
 #		$2 value
@@ -41,7 +41,7 @@ MKDIR=/bin/mkdir
 set_init_value ()
 {
 local rc=$2
-
+	
 	if [ -z $2 ] ; then rc=$3 ; fi
 	eval "$1=${rc}"
 }
@@ -185,7 +185,7 @@ set_init_value date ${GNU_DATE} "/bin/date"
 		error_log FATAL: get_dow reports ${date} "(Gnu Date)" is missing or not executable.
 		exit 1
 	fi
-	case ${dow} in
+	case ${dow} in 
 		1) dow="monday"
 		;;
 		2) dow="tuesday"
@@ -228,7 +228,7 @@ set_init_value sed ${SED} "/bin/sed"
 	else
 		error_log ERROR: normalize_name reports ${sed} "(sed)" is missing or not executable.
 	fi
-	eval "$1='${name}'"
+	eval "$1='${name}'" 
 }
 ##########################################################################################
 
@@ -246,7 +246,7 @@ normalize_description ()
 local name=$2
 local sed=""
 set_init_value sed ${SED} "/bin/sed"
-
+	
 	if [ -x ${sed} ] ; then
 		name=`echo "${name}" | ${sed} -e 's/\.//g'`
 		name=`echo "${name}" | ${sed} -e 's/\,//g'`
@@ -256,7 +256,7 @@ set_init_value sed ${SED} "/bin/sed"
 	else
 		error_log ERROR: normalize_description reports ${sed} "(sed)" is missing or not executable.
 	fi
-	eval "$1='${name}'"
+	eval "$1='${name}'" 
 }
 ##########################################################################################
 ##########################################################################################
@@ -280,14 +280,14 @@ WGET=/usr/bin/wget
 TAR=/bin/tar
 
 ##########################################################################################
-# Functions
+# Functions 
 ##########################################################################################
 
 ##########################################################################################
 #Function: tv_anytime_setup
 #Description:	Grabs programme listings to TV_ANYTIME directory tree for the specified day
 #
-#Requires:	set_init_value, make_dir
+#Requires:	set_init_value, make_dir 
 #Externals:	wget, tar
 #Input:        	$1 offset
 #Returns:  	None
@@ -362,7 +362,7 @@ set_init_value tar "${TAR}" "/bin/tar"
 #Function:	tv_anytime_get_details
 #Description:	Get Program details from tv_anytime listings
 #
-#Requires:	set_init_value,  normalize_name, normalize_description
+#Requires:	set_init_value,  normalize_name, normalize_description 
 #Externals:	xmlstarlet
 #Input:		$1 variable name for title
 #		$2 variable name for description
@@ -397,7 +397,7 @@ set_init_value xml "${XML_PARSER}" "/usr/bin/xmlstarlet"
 		*) debug_log "Unrecognised channel $3"
 		;;
 	esac
-
+  
   z_time=$5
 	if [ -x ${date} ] ; then
     if [ `date +"%Z"` == "BST" ]; then
@@ -443,7 +443,7 @@ BLEB_TREE=/tv/programme
 XML_PARSER=/usr/bin/xmlstarlet
 
 ##########################################################################################
-# Functions
+# Functions 
 ##########################################################################################
 
 ##########################################################################################
@@ -452,7 +452,7 @@ XML_PARSER=/usr/bin/xmlstarlet
 #
 #Requires:	set_init_value, make_dir
 #Externals:	tv_grab_uk_bleb
-#Input:	   	$1 channel
+#Input:	   	$1 channel 
 #          	$2 offset
 #Returns:  	None
 ##########################################################################################
@@ -465,9 +465,9 @@ local xml_file=""
 
 set_init_value dir "${BLEB_DIR}" "~/.borg/bleb"
 set_init_value conf_file "${BLEB_CONF}" "bleb.conf"
-set_init_value grabber "${BLEB_GRABBER}" "/usr/bin/tv_grab_uk_bleb"
+set_init_value grabber "${BLEB_GRABBER}" "/usr/bin/tv_grab_uk_bleb" 
 
-	make_dir ${dir}
+	make_dir ${dir}	
 	conf_file=${dir}/${conf_file}
 	xml_file=${dir}/${g_datestamp}_$1.xml
 
@@ -476,7 +476,7 @@ set_init_value grabber "${BLEB_GRABBER}" "/usr/bin/tv_grab_uk_bleb"
   else
 		echo $1 > ${conf_file}
 		if [ -x ${grabber} ] ; then
-			${grabber} --output ${xml_file} --days=1 --offset=$2 --config-file ${conf_file} 2>>${g_debug_log}
+			${grabber} --output ${xml_file} --days=1 --offset=$2 --config-file ${conf_file} 2>>${g_debug_log} 
 		else
 			error_log ERROR: bleb_setup reports ${grabber} "(tv_grab_uk_bleb)" is missing or not executable.
 		fi
@@ -488,7 +488,7 @@ set_init_value grabber "${BLEB_GRABBER}" "/usr/bin/tv_grab_uk_bleb"
 #Function:	bleb_get_details
 #Description:	Get Program details from bleb listings
 #
-#Requires:	set_init_value, bleb_filename, normalize_name, normalize_description
+#Requires:	set_init_value, bleb_filename, normalize_name, normalize_description 
 #Externals:	xmlstarlet
 #Input:		$1 variable name for title
 #		$2 variable name for description
@@ -561,8 +561,8 @@ local broadcast_date
   record_time=$3
 	debug_log $2 $3 $4
 	recorded=1
-#	bleb_get_details p_name p_desc $4 $2 $3
-	tv_anytime_get_details p_name p_desc $4 $2 $3
+#	bleb_get_details p_name p_desc $4 $2 $3 
+	tv_anytime_get_details p_name p_desc $4 $2 $3 
 	if [ "${p_name}" = "" ] ; then
 		if [ $3 = 1830 ] ; then
 #			bleb_get_details p_name p_desc $4 $2 1832
@@ -597,7 +597,7 @@ local broadcast_date
     fi
     if [ ${initial} -eq ${initial} 2>/dev/null ] ; then initial='0' ; fi
     if [ -e ${g_chk}/$check_file ]; then
-      desc2=`cat ${g_chk}/${check_file}`
+      desc2=`cat ${g_chk}/${check_file}` 
       if [ "${desc:0:50}" = "${desc2:0:50}" ] ; then
         debug_log Won\'t record ${g_mp3}/${initial}/${name}/${long_name}.mp3 while ${g_chk}/${check_file} exists.
         echo ${name} exists.
@@ -625,7 +625,7 @@ local broadcast_date
               make_dir ${g_wav}/${initial}/${name}
               ${DEBUG} mplayer -prefer-ipv4 -vc null -vo null -bandwidth 99999999999 -ao pcm:fast -ao pcm:waveheader -ao pcm:file=${g_wav}/${initial}/${name}/${long_name}.wav $1 2>/dev/null
               if [ -e ${g_wav}/${initial}/${name}/${long_name}.wav ] ; then
-                debug_log ${g_wav}/${initial}/${name}/${long_name}.wav recording successful.
+                debug_log ${g_wav}/${initial}/${name}/${long_name}.wav recording successful. 
               else
                 error_log ${g_wav}/${initial}/${name}/${long_name}.wav recording failed.
                 recorded=0
@@ -674,46 +674,47 @@ local track
   desc=$6
   record_date=$7
   record_time=$8
-
+  
   if [ ! -e ${g_mp3}/${initial}/${name}/${long_name}.mp3 ] ; then
-		if [ -e ${g_wav}/${initial}/${name}/${long_name}.wav ] ; then
-			make_dir ${g_mp3}/${initial}/${name}
-      echo MP3 encoding ${name}.
-      debug_log MP3 encoding ${name}.
-			while [ 1 ]; do
-				if [ ! -e "${g_enc_lock_file}" ] ; then
-					echo `date` > ${g_enc_lock_file}
+  	while [ 1 ]; do
+			if [ ! -e "${g_enc_lock_file}" ] ; then
+				echo `date` > ${g_enc_lock_file}
+        if [ -e ${g_wav}/${initial}/${name}/${long_name}.wav ] ; then
+          make_dir ${g_mp3}/${initial}/${name}
+          echo MP3 encoding ${name}.
+          debug_log MP3 encoding ${name}.
 					${NO_ENC} ${DEBUG} lame ${g_wav}/${initial}/${name}/${long_name}.wav ${g_mp3}/${initial}/${name}/${long_name}.mp3 2>/dev/null
-					${NO_ENC} ${DEBUG} rm ${g_wav}/${initial}/${name}/${long_name}.wav
-
+					${NO_ENC} ${DEBUG} rm ${g_wav}/${initial}/${name}/${long_name}.wav 
 					rm ${g_enc_lock_file}
-					break
-				else
-  					debug_log "Encoding lock file ${g_enc_lock_file} exists. If nothing is encoding delete this and retry."
-					sleep 30
-				fi
-			done
-
-      if [ -e ${g_mp3}/${initial}/${name}/${long_name}.mp3 ] ; then
-        echo ${desc} > ${g_chk}/${check_file}
-        broadcast_date=`grep -oh '[1-9][0-9]\{3\}' ${g_chk}/${check_file}`
-        if [ ${broadcast_date}. == . ]; then
-          broadcast_date=${record_date}
+          if [ -e ${g_mp3}/${initial}/${name}/${long_name}.mp3 ] ; then
+            echo ${desc} > ${g_chk}/${check_file}
+            broadcast_date=`grep -oh '[1-2][0-9]\{3\}' ${g_chk}/${check_file}`
+            if [ ${broadcast_date}. == . ]; then
+              broadcast_date=${record_date}
+            fi
+            track=`grep -oh '[1-2][0-9]\{0,2\}\ of' ${g_chk}/${check_file} | grep -oh '[1-2][0-9]\{0,2\}'`
+            if [ ${track}. == . ]; then
+              track='0'
+            fi
+            debug_log Setting MP3 id tags for ${name}.
+            mp3info -n "${track}" -l "${name}" -a "${name}" -t "${desc}" -c "${desc}" -y "${broadcast_date:0:4}" -g 57 ${g_mp3}/${initial}/${name}/${long_name}.mp3
+          fi
+        else
+          rm ${g_enc_lock_file}
         fi
-        track=`grep -oh '[1-9][0-9]\{0,2\}\ of' ${g_chk}/${check_file} | grep -oh '[1-9][0-9]\{0,2\}'`
-        if [ ${track}. == . ]; then
-          track='0'
+        if [ ! -e ${g_guide}/${long_name}.txt ] ; then
+          make_dir ${g_guide}
+          debug_log Adding missing guide details for ${name} to ${g_guide}/${long_name}.txt
+          echo ${name} > ${g_guide}/${long_name}.txt
+          echo ${desc} >> ${g_guide}/${long_name}.txt
         fi
-        debug_log Setting MP3 id tags for ${name}.
-        mp3info -n "${track}" -l "${name}" -a "${name}" -t "${desc}" -c "${desc}" -y "${broadcast_date:0:4}" -g 57 ${g_mp3}/${initial}/${name}/${long_name}.mp3
-        fi
+				break
+      else
+        debug_log "Delaying encoding of ${name}. Encoding lock file ${g_enc_lock_file} exists. If nothing is encoding delete this and retry."
+        sleep 120
+        debug_log "Waking up encoding of ${name}"
       fi
-		if [ ! -e ${g_guide}/${long_name}.txt ] ; then
-			make_dir ${g_guide}
-			debug_log Adding missing guide details for ${name} to ${g_guide}/${long_name}.txt
-			echo ${name} > ${g_guide}/${long_name}.txt
-			echo ${desc} >> ${g_guide}/${long_name}.txt
-		fi
+		done
 	fi
 	return ${recorded}
 }
@@ -747,23 +748,23 @@ main ()
   echo ========================
 
 # Setup Bleb programme listings for required channels and dates
-#	bleb_setup ${g_radio4} ${g_offset}
+#	bleb_setup ${g_radio4} ${g_offset} 
 #	bleb_setup ${g_bbc7} ${g_offset}
 
 # Setup TV-Anytime programme listings for required dates
 	tv_anytime_setup ${g_offset}
-
-	for g_time in 0945 1830 1945 2300
+	
+	for g_time in 1830 2300
 	do
 	  recorded=0
 	  if [ ${recorded} = 0 ] ; then
-		g_url=rtsp://rmv8.bbc.net.uk:554/radio4fmcoyopa/radio_4_fm_-_${g_dow}_${g_time}.ra
+		g_url=rtsp://rmv8.bbc.net.uk:554/radio4fmcoyopa/radio_4_fm_-_${g_dow}_${g_time}.ra 
 		radio_record ${g_url} ${g_datestamp} ${g_time} ${g_radio4}
 		recorded=$?
 	  fi
 	done
-
-	for g_time in 1800 1830 1845 2200 2230 2300 2315 2330 2345
+	
+	for g_time in 1800 1830 1845 2200 2230 2300 2315 2330 2345 
 	do
 		g_url=rtsp://rmv8.bbc.net.uk:554/bbc7coyopa/bbc7_-_${g_dow}_${g_time}.ra
 		radio_record ${g_url} ${g_datestamp} ${g_time} ${g_bbc7}
@@ -776,7 +777,7 @@ main ()
 ##########################################################################################
 ##########################################################################################
 #
-#	Real Main
+#	Real Main 
 #
 #	Actual entry point for the shell script
 #
@@ -799,10 +800,10 @@ set_init_value g_enc_lock_file ${ENC_LOCK} ${g_root}/"lame.lck"
 if [ ! -e "${g_lock_file}" ] ; then
 	echo `date` > ${g_lock_file}
   error_log `date`
-	debug_log BBC Radio Recording Programme starting
+	debug_log BBC Radio Recording Programme starting 
 	while [ -n "$1" ]; do
 	set_init_value g_offset $1 -1
-		main $1
+		main $1 
 		shift
 	done
   debug_log BBC Radio Recording Programme exiting
@@ -811,3 +812,4 @@ else
   error_log "Lock file ${g_lock_file} exists. If nothing is recording delete this and retry."
 fi
 ##########################################################################################
+

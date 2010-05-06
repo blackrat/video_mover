@@ -674,11 +674,11 @@ local track
 	fi
 	if [ -e ${g_mp3}/${initial}/${name}/${long_name}.mp3 ] ; then
   	echo ${desc} > ${g_chk}/${check_file}
-    broadcast_date=`grep -oh '[1-9][0-9]\{3\}' ${g_chk}/${check_file}`
+    broadcast_date=`grep -oh '[1-2][0-9]\{3\}' ${g_chk}/${check_file}`
     if [ ${broadcast_date}. == . ]; then
       broadcast_date=${record_date}
     fi
-    track=`grep -oh '[1-9][0-9]\{0,2\}\ of' ${g_chk}/${check_file} | grep -oh '[1-9][0-9]\{0,2\}'`
+    track=`grep -oh '[1-2][0-9]\{0,2\}\ of' ${g_chk}/${check_file} | grep -oh '[1-2][0-9]\{0,2\}'`
     if [ ${track}. == . ]; then
       track='0'
     fi
