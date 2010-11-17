@@ -8,8 +8,8 @@ require 'open-uri'
 require 'fileutils'
 require 'yaml'
 
-VAULT_STORE = "/vault/.programmes"
-VIDEO_SRC = ["/vault/tv1", "/vault/tv2", "/vault/tv3", "/vault/med01/video/completed"]
+VAULT_STORE = File.expand_path("~/.borg/first_aired")
+VIDEO_SRC = ["/vault/tv1",'/vault/tv2','/vault/tv3']
 API_KEY="251551148FAFB4DA"
 
  def url_encode(s)
@@ -56,7 +56,7 @@ class ArchiveVideos
         val=get_from_file(name)
         if val.nil?
           val=get_from_thetvdb(name)
-          spool=true unless val.nil?
+          spool=true
         end
         first_aired[name]=val
         save_to_file if spool
@@ -68,28 +68,31 @@ class ArchiveVideos
     def span_seasons(programme)
       programme_name=programme.split('/')[-1].split('_').join(' ')
       programme_year=programme_find_year(programme_name)
-      return if programme_year.nil?
       seasons=Dir.glob(File.join(programme,'Season*')).collect {|y| y}
       new_seasons=[]
       seasons.each do |x|
         case x
         when /\/(\d\d\d\d)\/.*\/Season(\d\d)/
           season=$2.to_i
-          year=programme_year+(season<1 ? 0 : season-1)
-          if year < 2011
-            new_seasons << x.gsub(/\/(\d\d\d\d)\//,"/#{year}/")
+          if programme_year==0
+            year='filing'
           else
-            new_seasons << x
+            year=programme_year+(season<1 ? 0 : season-1)
+            if year < 2011
+              new_seasons << x.gsub(/\/(\d\d\d\d)\//,"/#{year}/")
+            else
+              new_seasons << x
+            end
           end
         end
       end
       new_seasons.size.times do |x|
         next if seasons[x]==new_seasons[x]
         puts("Moving from #{seasons[x]} to #{new_seasons[x]}")
-#        FileUtils.mkdir_p(new_seasons[x])
+        FileUtils.mkdir_p(new_seasons[x])
         Dir.glob(File.join(seasons[x],'*')).each do |file|
           puts("Moving #{file}")
-#          FileUtils.mv(file,new_seasons[x])
+          FileUtils.mv(file,new_seasons[x])
         end
       end
     end
