@@ -17,7 +17,7 @@ class ArchiveVideos
 
     def span_seasons(programme)
       seasons=Dir.glob(File.join(programme,'Season*')).collect {|y| y}
-      if seasons.size>1
+      if seasons.size==1
         new_seasons=[]
         seasons.each do |x|
           case x
@@ -33,6 +33,7 @@ class ArchiveVideos
           puts("Moving from #{seasons[x]} to #{new_seasons[x]}")
           FileUtils.mkdir_p(new_seasons[x])
           Dir.glob(File.join(seasons[x],'*')).each do |file|
+            puts("Moving #{file}")
             FileUtils.mv(file,new_seasons[x])
           end
         end
