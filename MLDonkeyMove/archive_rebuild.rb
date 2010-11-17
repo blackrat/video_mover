@@ -17,14 +17,14 @@ class ArchiveVideos
 
     def span_seasons(programme)
       seasons=Dir.glob(File.join(programme,'Season*')).collect {|y| y}
-      if seasons.size==1
+      if seasons.size>1
         new_seasons=[]
         seasons.each do |x|
           case x
           when /\/(\d\d\d\d)\/.*\/Season(\d\d)/
             year=$1.to_i
             season=$2.to_i
-            year+=season+1 if season==0
+            year+=season+1 unless season==0
             new_seasons << x.gsub(/\/(\d\d\d\d)\//,"/#{year}/")
           end
         end
