@@ -32,7 +32,9 @@ class ArchiveVideos
           next if seasons[x]==new_seasons[x]
           puts("Moving from #{seasons[x]} to #{new_seasons[x]}")
           FileUtils.mkdir_p(new_seasons[x])
-          FileUtils.mv(seasons[x],new_seasons[x])
+          Dir.glob(File.join(seasons[x],'*')).each do |file|
+            FileUtils.mv(file,new_seasons[x])
+          end
         end
       end
     end
