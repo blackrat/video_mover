@@ -24,7 +24,7 @@ class ArchiveVideos
           when /\/(\d\d\d\d)\/.*\/Season(\d\d)/
             year=$1.to_i
             season=$2.to_i
-            year+=season-1
+            year+=season+1 if season==0
             new_seasons << x.gsub(/\/(\d\d\d\d)\//,"/#{year}/")
           end
         end
