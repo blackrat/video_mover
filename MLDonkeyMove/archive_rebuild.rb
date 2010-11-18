@@ -96,8 +96,12 @@ class ArchiveVideos
           else
             begin
               case programme_name
-              when "Have I Got News for You","Top Gear"
+              when "Have I Got News for You","Top Gear","Mock the Week"
                 year=programme_year+(season<2 ? 0 : (season/2)-1)
+              when "Medium"
+                year=programme_year+(season<1 ? 0 : (season<3 ? season-1 : season-2))
+              when "Rules of Engagement"
+                year=programme_year+(season<1 ? 0 : (season<5 ? season-1 : season-2))
               else
                 year=programme_year+(season<1 ? 0 : season-1)
               end
