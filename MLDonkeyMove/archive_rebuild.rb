@@ -116,7 +116,16 @@ class ArchiveVideos
         FileUtils.mkdir_p(new_seasons[x])
         Dir.glob(File.join(seasons[x],'*')).each do |file|
           puts("Moving #{file}")
-          FileUtils.mv(file,new_seasons[x])
+          begin
+            FileUtils.mv(file,new_seasons[x])
+          rescue
+            Dir.glob(File.join(file,'*')).each do |subfile|
+              puts("Moving #{subfile} to #{File.join(new_seasons[x],'.')}")
+#              begin
+#                FileUtils.mv(subfile,File.join(new_seasons[x],'.'))
+#              end
+            end
+          end
         end
       end
     end
