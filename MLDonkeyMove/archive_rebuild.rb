@@ -72,7 +72,7 @@ class ArchiveVideos
       programmes.each do |x|
         if directory.include?(x)
           Dir.glob(File.join(directory,x,'**')).each do |y|
-            puts("Moving #{y} to directory")
+            puts("Moving #{y} to #{directory}")
             FileUtils.mv(y,directory)
           end
         end
