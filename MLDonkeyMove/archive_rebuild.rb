@@ -77,12 +77,19 @@ class ArchiveVideos
           if programme_year==0
             year='filing'
           else
-            year=programme_year+(season<1 ? 0 : season-1)
-            if year < 2011
-              new_seasons << x.gsub(/\/(\d\d\d\d)\//,"/#{year}/")
-            else
-              new_seasons << x
+            begin
+              case programme_name
+              when "Have I Got News for You","Top Gear"
+                year=programme_year+(season<2 ? 0 : (season/2)-1)
+              else
+                year=programme_year+(season<1 ? 0 : season-1)
+              end
+              raise YearOutOfBounds if year>2011
+            rescue YearOutOfBounds
+              season=season/10
+              retry
             end
+            new_seasons << x.gsub(/\/(\d\d\d\d)\//,"/#{year}/")
           end
         end
       end
