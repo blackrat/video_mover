@@ -12,6 +12,8 @@ VAULT_STORE = File.expand_path("~/.borg/first_aired")
 VIDEO_SRC = ["/vault/tv1",'/vault/tv2','/vault/tv3']
 API_KEY="251551148FAFB4DA"
 
+class YearOutOfBounds < RuntimeError; end
+
  def url_encode(s)
    s.to_s.gsub(/[^a-zA-Z0-9_\-.]/n){ sprintf("%%%02X", $&.unpack("C")[0]) }
  end
