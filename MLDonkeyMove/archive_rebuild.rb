@@ -65,11 +65,26 @@ class ArchiveVideos
       @programme_hash[programme_name]
     end
 
+    def season_fixup(directory)
+      programmes=Dir.glob(File.join(directory,'**')).collect {|y| y.gsub("#{directory}/",'')}
+      programmes.each do |x|
+        if directory.include?(x)
+          Dir.glob(File.join(directory,x,'**')).each do |y|
+            FileUtils.mv(y,directory)
+          end
+        end
+      end
+      puts(programmes)
+    end
+
     def span_seasons(programme)
       programme_name=programme.split('/')[-1].split('_').join(' ')
       programme_year=programme_find_year(programme_name)
       seasons=Dir.glob(File.join(programme,'Season*')).collect {|y| y}
       new_seasons=[]
+      seasons.each do |x|
+        season_fixup(x)
+      end
       seasons.each do |x|
         case x
         when /\/(\d\d\d\d)\/.*\/Season(\d\d)/
