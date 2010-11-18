@@ -72,11 +72,11 @@ class ArchiveVideos
       programmes.each do |x|
         if directory.include?(x)
           Dir.glob(File.join(directory,x,'**')).each do |y|
+            puts("Moving #{y} to directory")
             FileUtils.mv(y,directory)
           end
         end
       end
-      puts(programmes)
     end
 
     def span_seasons(programme)
@@ -115,7 +115,7 @@ class ArchiveVideos
         puts("Moving from #{seasons[x]} to #{new_seasons[x]}")
         FileUtils.mkdir_p(new_seasons[x])
         Dir.glob(File.join(seasons[x],'*')).each do |file|
-          puts("Moving #{file}")
+          puts("Moving #{file} to #{new_seasons[x]}")
           begin
             FileUtils.mv(file,new_seasons[x])
           rescue
