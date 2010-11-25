@@ -4,7 +4,7 @@
 IFS=$'\x0A'$'\x0D'
 
 cd /vault/med01/video/completed
-for i in $( ls ) 
+for i in $( ls )
 do
- /usr/local/bin/movevideo 0 0 $i
+ /usr/local/bin/movevideo $i
 done

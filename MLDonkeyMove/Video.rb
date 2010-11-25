@@ -30,7 +30,7 @@ end
 $find_array=   [ /\(/, /\)/, /'/, /$/, / & /,   / s /, / m /, / t /, / ll /,/\[/,/\]/,/\,/]
 $replace_array=[ ' ',  ' ',  ' ', ' ', ' and ', 's ',  'm ',  't ',  'll ', ' ', ' ',' ']
 $fixup_array=  [ /\bregenesis\b/i, /\bxy\b/i, /\bcsi\b/i, /\bthe it\b/i, /\bnyc\b/i,      /\bny\b/i,  /\bsvu\b/i,              /\btv\b/i,       /\bbbc\b/i,       /\busa\b/i,       /\buk\b/i, /\bq.{0,1}i.{0,1}\b/i, /\bsnl\b/i,            /\bsg.{0,1}1\b/i, /\bttr\b/i ]
-$fixedup_array=[ 'ReGenesis',      'XY',      'CSI',      'The IT',      'New York City', 'New York', 'Special Victims Unit',  'TV',            'BBC',            'USA',            'UK',      'QI',                  'Saturday Night Live', 'SG1',            'Tripping the Rift']
+$fixedup_array=[ 'ReGenesis',      'XY',      'CSI',      'The IT',      'New York City', 'New York', 'Special Victims Unit',  'TV',            'BBC',            'USA',            'UK',      'QI_',                  'Saturday Night Live', 'SG1',            'Tripping the Rift']
 TVROOT="/vault/kvm01/video/episodes"
 MOVIEROOT="/vault/kvm01/video/movies"
 AUDIOROOT="/vault/kvm01/audio/radio/episodes"
@@ -48,7 +48,7 @@ class Video < Filename
     @replace_array=replacearray
     extractfile_include(extractfile) if extractfile != ""
     @normalized_filename=normalize(@filename)
-    @auto_subdir=(@normalized_filename.gsub(/^(The_|An_|A_)/,''))[0,1]
+    @auto_subdir=(@normalized_filename.gsub(/^(The_|An_|A_)/,'').gsub(/^(\d)/,'0'))[0,1]
     @base_dir=""
     @link_dir=LINKPATH
     @alias_dir=""
@@ -118,7 +118,7 @@ class TVEpisode < Video
             @season=sprintf("%02d",$2.to_i)
             @episode=sprintf("%02d",$3.to_i)
             @title=$4
-        when /(.*?)_(\d*)[ep\.]*(\d{1,2})_*(.*)/:                         #only a single number. Requires season
+        when /(.*?)_(\d*)[ep\.]*(\d{2})_*(.*)/:                         #only a single number. Requires season
             @series=File.basename($1,'.*')
             @season=sprintf("%02d",$2.to_i)
             @season="01" if @season=="00"
@@ -134,6 +134,15 @@ class TVEpisode < Video
             @season="01"
             @episode=sprintf("%02d",$2.to_i)
             @title="_of_#{$3}_#{$4}"
+
+
+  #<tvshowmatching>
+  #  <regexp>\[[Ss]([0-9]+)\]_\[[Ee]([0-9]+)([^\\/]*)</regexp>  <!-- foo_[s01]_[e01] -->
+  #  <regexp>[\._ \-]([0-9]+)x([0-9]+)([^\\/]*)</regexp>  <!-- foo.1x09 -->
+  #  <regexp>[\._ \-][Ss]([0-9]+)[\.\-]?[Ee]([0-9]+)([^\\/]*)</regexp>  <!-- foo s01e01, foo.s01.e01, foo.s01-e01 -->
+  #  <regexp>[\._ \-]([0-9]+)([0-9][0-9])([\._ \-][^\\/]*)</regexp>  <!-- foo.103 -->
+  #  <regexp>[\._ \-]p(?:ar)?t[._ -]()([ivxlcdm]+)([\._ \-][^\\/]*)</regexp>  <!-- Pt.I, Part XIV -->
+  #</tvshowmatching>
 #        when /(.*?)[s_#](\d{2})_*[ex\.]*_*(\d{2})(.*)/i:        #matches most cases
 #            @series=File.basename($1,'.*')
 #            @season=sprintf("%02d",$2.to_i)
@@ -196,7 +205,7 @@ class TVEpisode < Video
         while @normalized_filename.include?("__")
           @normalized_filename.gsub!(/__/,"_")
         end
-        initial=(@series.gsub(/^(The_|An_|A_)/,''))[0,1]
+        initial=(@series.gsub(/^(The_|An_|A_)/,'').gsub(/^(\d)/,'0'))[0,1]
         @auto_subdir=File.join(initial,@series,"Season#{@season}")
         @base_dir=TVROOT
         @alias_dir=TVALIAS
