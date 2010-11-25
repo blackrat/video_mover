@@ -1,7 +1,7 @@
 require 'ftools'
 libdir=$:.max
 LIBLIST=["Video.rb","String.rb","TitleCase.rb","Video.rb","withindex.rb","Filename.rb"]
-datadir="/etc"
+datadir="/etc/borg"
 DATALIST=["extractdata"]
 bindir="/usr/local/bin"
 BINLIST=["movevideo","moveall"]

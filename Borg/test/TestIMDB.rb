@@ -23,8 +23,7 @@ class TestIMDB < Test::Unit::TestCase
     assert_equal(13,test.episodes[:Season02].length)
   end
 
-  def test_als -l
-    _get_episodes_non_unique
+  def test_get_episodes_non_unique
     test=IMDB.new("Dr Who")
     assert_equal(2,test.episodes.length)
     assert_equal(12,test.episodes[:Season01].length)
