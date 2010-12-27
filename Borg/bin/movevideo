@@ -11,16 +11,8 @@ require 'rubygems'
 require "logger"
 require 'fileutils'
 $:.unshift(File.join(File.dirname(__FILE__),'..','lib')) unless $:.include?(File.join(File.dirname(__FILE__),'..','lib'))
-begin
-  require 'config/Config'
-rescue
-  require 'Config'
-end
-begin
-  require 'config/Filename'
-rescue
-  require 'Filename'
-end
+require 'Config'
+require 'Filename'
 begin
   FileUtils.mkdir_p(LOG_DIR) unless File.exists?(LOG_DIR)
   logfile=File.join(LOG_DIR,LOG_FILE)
