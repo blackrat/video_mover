@@ -23,22 +23,24 @@ rescue => e
 end
 Log.info {"#{$0} starting."}
 
-exit if ARGV.empty?
-filename=ARGV[0].chomp
-filename=File.join(COMPLETED_DIR,filename) unless File.exists?(filename)
-if File.exists?(filename) then
-  Log.info {"Analysing #{filename}."}
-  test=Filename::normalize(filename,true)
-  prefix,series_name,season,episode,title=Filename::location(filename)
-  FileUtils.mkdir_p("#{DESTINATION}/#{prefix}/#{series_name}") unless File.exist?("#{DESTINATION}/#{prefix}/#{series_name}")
-  if episode.nil?
-    FileUtils.mv(filename,"#{DESTINATION}/#{prefix}/#{series_name}/#{test}") unless File.exist?("#{DESTINATION}/#{prefix}/#{series_name}/#{test}")
-  else
-    FileUtils.mkdir_p("#{DESTINATION}/#{prefix}/#{series_name}/Season#{season}") unless File.exist?("#{DESTINATION}/#{prefix}/#{series_name}/Season#{season}")
-    FileUtils.mv(filename,"#{DESTINATION}/#{prefix}/#{series_name}/Season#{season}/#{test}") unless File.exist?("#{DESTINATION}/#{prefix}/#{series_name}/Season#{season}/#{test}")
-  end
+if ARGV.empty?
+  Log.error {"No files specified. Exiting"}
 else
-  Log.debug {"Unable to find file #{filename}"}
-end unless filename.nil?
-
+  filename=ARGV[0].chomp
+  filename=File.join(COMPLETED_DIR,filename) unless File.exists?(filename)
+  if File.exists?(filename) then
+    Log.info {"Analysing #{filename}."}
+    test=Filename::normalize(filename,true)
+    prefix,series_name,season,episode,title=Filename::location(filename)
+    FileUtils.mkdir_p("#{DESTINATION}/#{prefix}/#{series_name}") unless File.exist?("#{DESTINATION}/#{prefix}/#{series_name}")
+    if episode.nil?
+      FileUtils.mv(filename,"#{DESTINATION}/#{prefix}/#{series_name}/#{test}") unless File.exist?("#{DESTINATION}/#{prefix}/#{series_name}/#{test}")
+    else
+      FileUtils.mkdir_p("#{DESTINATION}/#{prefix}/#{series_name}/Season#{season}") unless File.exist?("#{DESTINATION}/#{prefix}/#{series_name}/Season#{season}")
+      FileUtils.mv(filename,"#{DESTINATION}/#{prefix}/#{series_name}/Season#{season}/#{test}") unless File.exist?("#{DESTINATION}/#{prefix}/#{series_name}/Season#{season}/#{test}")
+    end
+  else
+    Log.debug {"Unable to find file #{filename}"}
+  end unless filename.nil?
+end
 Log.info {"#{$0} completed."}
