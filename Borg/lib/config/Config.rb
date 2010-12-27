@@ -30,7 +30,7 @@ module Config
             @cf=File.expand_path(File.join(cd,"#{file}#{CONFIG_EXT}"))
             break if File.exists?(@cf)
           } if @cf.nil?
-          File.exists?(@cf) ? YAML.load_file(@cf) : nil
+          File.exists?(@cf) ? (puts(@cf);YAML.load_file(@cf)) : nil
         }
       end
     end
