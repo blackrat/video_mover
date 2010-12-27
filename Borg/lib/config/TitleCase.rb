@@ -62,7 +62,7 @@
 # Harcourt, 2001.
 
 $:.unshift(File.join(File.dirname(__FILE__),'..','..','lib')) unless $:.include?(File.join(File.dirname(__FILE__),'..','..','lib'))
-require "config/withindex.rb"
+require "withindex.rb"
 
 module TitleCase
   # mix into String
