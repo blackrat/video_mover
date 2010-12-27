@@ -23,7 +23,8 @@ rescue => e
 end
 Log.info {"#{$0} starting."}
 
-filename=ARGV[0].chomp unless ARGV.empty?
+exit if ARGV.empty?
+filename=ARGV[0].chomp
 filename=File.join(COMPLETED_DIR,filename) unless File.exists?(filename)
 if File.exists?(filename) then
   Log.info {"Analysing #{filename}."}
