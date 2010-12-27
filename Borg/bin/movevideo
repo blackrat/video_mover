@@ -20,6 +20,7 @@ begin
   require 'config/Filename'
 rescue
   require 'Filename'
+end
 begin
   FileUtils.mkdir_p(LOG_DIR) unless File.exists?(LOG_DIR)
   logfile=File.join(LOG_DIR,LOG_FILE)
