@@ -4,7 +4,7 @@
 #  Copyright (c) 2006. All rights reserved.
 # String utilities to add array substitution and titlecase
 $:.unshift(File.join(File.dirname(__FILE__),'..','..','lib')) unless $:.include?(File.join(File.dirname(__FILE__),'..','..','lib'))
-require 'config/TitleCase'
+require 'TitleCase'
 
 class String
   include TitleCase

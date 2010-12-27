@@ -3,8 +3,8 @@ require 'rubygems'
 require 'yaml'
 require 'open-uri'
 require 'nokogiri'
-require 'config/Config'
-require 'config/String'
+require 'Config'
+require 'String'
 
 class YearOutOfBounds < RuntimeError; end
 
