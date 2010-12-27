@@ -1,4 +1,4 @@
- -#!/usr/bin/env ruby
+#!/usr/bin/env ruby
 # Semiintelligent title-casing
 #
 # Author: Martin DeMello <martindemello@yahoo.com>
@@ -61,7 +61,8 @@
 #    -- Hodges, John C. Hodges' Harbrace Handbook. 14th ed. Fort Worth:
 # Harcourt, 2001.
 
-require "withindex.rb"
+$:.unshift(File.join(File.dirname(__FILE__),'..','..','lib')) unless $:.include?(File.join(File.dirname(__FILE__),'..','..','lib'))
+require "config/withindex.rb"
 
 module TitleCase
   # mix into String
