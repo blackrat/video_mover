@@ -10,7 +10,7 @@ DESTINATION="/vault/tv3"
 require 'rubygems'
 require "logger"
 require 'fileutils'
-$:.unshift(File.join(File.dirname(__FILE__),'..','lib')) unless $:.include?(File.join(File.dirname(__FILE__),'..','lib'))
+$:.unshift(File.join(File.dirname(__FILE__),'..','lib','config'))
 require 'Config'
 require 'Filename'
 begin

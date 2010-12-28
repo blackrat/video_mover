@@ -1,4 +1,4 @@
- -#!/usr/bin/env ruby
+#!/usr/bin/env ruby
 # Semiintelligent title-casing
 #
 # Author: Martin DeMello <martindemello@yahoo.com>
