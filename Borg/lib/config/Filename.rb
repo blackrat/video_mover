@@ -20,7 +20,6 @@ class Filename
     def type(filename)
       extension=File.extname(filename)[1..-1]
       return :unknown if extension.nil? || extension.empty?
-      puts(extensions)
       extensions.each { |k,v|
         return k if v.include?(extension)
       }

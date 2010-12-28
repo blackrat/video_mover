@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# No Whitespace == Line Feed:Carriage Return
+IFS=$'\x0A'$'\x0D'
+
+cd /vault/tv3/filing/
+for i in *
+do
+ /usr/local/bin/movevideo $i
+done

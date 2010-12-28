@@ -5,7 +5,7 @@ LIBLIST=["Config.rb","String.rb","TitleCase.rb","withindex.rb","Filename.rb"]
 datadir="/etc/borg"
 DATALIST=["extensions.yml","extractions.yml","fixups.yml","regular_expressions.yml","replacements.yml"]
 bindir="/usr/local/bin"
-BINLIST=["movevideo"]
+BINLIST=["movevideo","moveall"]
 
 desc "Install Borg Applications"
 task :install => [:libfiles,:datafiles,:binfiles]
