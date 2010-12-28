@@ -19,6 +19,7 @@ end
 
 desc "Install data files"
 task :datafiles do
+  mkdir_p datadir
   DATALIST.each do |x|
     cp File.join('etc',x), datadir
   end
