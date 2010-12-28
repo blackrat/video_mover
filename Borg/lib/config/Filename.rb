@@ -81,7 +81,10 @@ class Filename
             if filename=~le
               series_name,season,episode,title=$~[1..-1]
               prefix='filing'
-              prefix=get_from_thetvdb($1)+$2.to_i unless $2.nil?
+              unless $2.nil?
+                prefix=get_from_thetvdb($1)
+                prefix+=$2-1 if $2>1
+              end
               return [prefix,$~[1..-1]].flatten
             end
           end
