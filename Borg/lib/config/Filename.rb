@@ -74,7 +74,9 @@ class Filename
 
 
     def save_to_file
-      File.open(VAULT_STORE,'w+') {|fd| YAML.dump(@programme_hash,fd)}
+      spool_hash=YAML.load_file(VAULT_STORE)
+      spool_hash.merge(@programme_hash)
+      File.open(VAULT_STORE,'w+') {|fd| YAML.dump(spool_hash,fd)}
     end
 
     def get_from_file(name)
