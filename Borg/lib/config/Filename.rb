@@ -6,6 +6,8 @@ require 'nokogiri'
 require 'Config'
 require 'String'
 
+VAULT_STORE = File.expand_path("~/.borg/first_aired")
+
 class YearOutOfBounds < RuntimeError; end
 
 class Filename
@@ -68,6 +70,36 @@ class Filename
         puts(e)
         nil
       end
+    end
+
+
+    def save_to_file
+      File.open(VAULT_STORE,'w+') {|fd| YAML.dump(@programme_hash,fd)}
+    end
+
+    def get_from_file(name)
+      begin
+        details=YAML.load_file(VAULT_STORE)
+        details[name]
+      rescue Exception=>e
+        puts(e)
+        nil
+      end
+    end
+
+    def programme_find_year(programme_name)
+      @programme_hash||=Hash.new do |first_aired,name|
+        spool=false
+        val=get_from_file(name)
+        if val.nil?
+          val=get_from_thetvdb(name)
+          spool=true
+        end
+        first_aired[name]=val
+        save_to_file if spool
+        val
+      end
+      @programme_hash[programme_name]
     end
 
     def location(filename)
