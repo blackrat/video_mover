@@ -1,0 +1,31 @@
+mediarover TODO
+===============
+- update/rewrite all unittests to reflect recent changes
+   - write test for mediarover.util.filesystem to verify that it is correctly
+	caching episodes when they are retrieved
+- allow user to specify whether or not they want pre-season recap episodes 
+(ie. 3x00)
+- look at handling mini or fractional episodes 
+(ie. Big Brother (IT) - 9x45a - Daily Show).
+	- update regex to look for optional letter following episode number
+	- store it in episode object and spit it out whenever converting episode
+	to string
+- update custom errors to allow setting an error number.  That way I can 
+handle different numbered error specifically
+	- update util.filesystem to number different errors
+- standardize category types that are supported by application
+	- each source should return one of supported categories when queried
+- update mediarover.error so that it doesn't accept arguments to apply to the error message
+  - update to accept a logging level
+- to address the possibility of nzb's having the same title, look at using the url or other piece of data to make title unique
+- think about duplicate episodes on disk (no timestamp) and how MR handles them when reading in a series episodes
+- when using shutil library to move a file, it uses copystat() to copy permissions, access time, etc.  This causes problems if the user doesn't 
+  have permission to set this type of metadata on a file.  
+  - look at replacing shutil.move() with a straight copy()
+  - write my own move utility that checks for such errors
+- to determine quality of existing episodes on disk
+  - grab all files in a series
+  - group files by size (group if within 10% of average size)
+  - show users list of average sizes and number of episodes in that range
+  - allow them to set quality for those episodes
+- move code that creates series objects to its own method in mediarover.series
