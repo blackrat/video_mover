@@ -1,0 +1,33 @@
+require 'rubygems'
+require 'fileutils'
+libdir=$:.max
+LIBLIST=["Config.rb","String.rb","TitleCase.rb","withindex.rb","Filename.rb"]
+datadir="/etc/borg"
+DATALIST=["extensions.yml","extractions.yml","fixups.yml","regular_expressions.yml","replacements.yml"]
+bindir="/usr/local/bin"
+BINLIST=["movevideo","moveall"]
+
+desc "Install Borg Applications"
+task :install => [:libfiles,:datafiles,:binfiles]
+
+desc "Install library files"
+task :libfiles do
+  LIBLIST.each do |x|
+    cp File.join('lib','config',x), libdir
+  end
+end
+
+desc "Install data files"
+task :datafiles do
+  mkdir_p datadir
+  DATALIST.each do |x|
+    cp File.join('etc',x), datadir
+  end
+end
+
+desc "Install executable"
+task :binfiles do
+  BINLIST.each do |x|
+    cp File.join('bin',x), bindir
+  end
+end

@@ -1,0 +1,18 @@
+---
+:bbc:
+  :web:
+    :national: http://iplayerhelp.external.bbc.co.uk/help/streaming_programmes/real_wma_streams
+    :local: http://iplayerhelp.external.bbc.co.uk/help/streaming_programmes/local_radio_streams
+  :channels:
+    :radio1:
+      :url: http://bbc.co.uk/radio/listen/live/r1.asx
+      :streams:
+        - mms://wmlive-acl.bbc.co.uk/wms/bbc_ami/radio1/radio1_bb_live_eq1_sl0
+    :1xtra:
+      :url: http://bbc.co.uk/radio/listen/live/r1x.asx
+      :streams:
+        - mms://wmlive-acl.bbc.co.uk/wms/bbc_ami/1xtra/1xtra_bb_live_eq1_sl0
+    :bbc radio 7:
+      :url: http://bbc.co.uk/radio/listen/live/r7.asx
+      :streams:
+        - mms://wmlive-acl.bbc.co.uk/wms/bbc_ami/bbc7/bbc7_bb_live_eq1_sl0

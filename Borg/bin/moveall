@@ -1,0 +1,9 @@
+#!/bin/bash
+
+# No Whitespace == Line Feed:Carriage Return
+IFS=$'\x0A'$'\x0D'
+
+for i in *
+do
+ /usr/local/bin/movevideo $i
+done
