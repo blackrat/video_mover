@@ -13,6 +13,7 @@ task :install => [:libfiles,:datafiles,:binfiles]
 desc "Install library files"
 task :libfiles do
   LIBLIST.each do |x|
+    puts("Copying #{x}")
     cp File.join('lib','config',x), libdir
   end
 end
@@ -21,6 +22,7 @@ desc "Install data files"
 task :datafiles do
   mkdir_p datadir
   DATALIST.each do |x|
+    puts("Copying #{x}")
     cp File.join('etc',x), datadir
   end
 end
@@ -28,6 +30,7 @@ end
 desc "Install executable"
 task :binfiles do
   BINLIST.each do |x|
+    puts("Copying #{x}")
     cp File.join('bin',x), bindir
   end
 end
