@@ -54,7 +54,7 @@ class Filename
         v.each do |reg|
           reg.each do |r1,v1|
             le=Regexp.new(r1,true)
-            return filename.gsub(le,v1) if filename=~le
+            return filename.gsub(le,v1) if filename=~le unless le.nil?
           end
         end if k==file_type
       end
