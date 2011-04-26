@@ -54,7 +54,10 @@ class Filename
         v.each do |reg|
           reg.each do |r1,v1|
             le=Regexp.new(r1,true)
-            return filename.gsub(le,v1) if filename=~le unless le.nil?
+            if filename=~le
+              puts "Matched #{filename} with #{le} replacing with #{v1}."
+              return filename.gsub(le,v1)
+            end
           end
         end if k==file_type
       end
