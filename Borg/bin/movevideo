@@ -13,6 +13,27 @@ require 'fileutils'
 $:.unshift(File.join(File.dirname(__FILE__),'..','lib','config'))
 require 'Config'
 require 'Filename'
+
+def create_directory(series_dirname)
+  unless File.exists?(series_dirname)
+    puts("Creating series directory #{series_dirname}.")
+    FileUtils.mkdir_p(series_dirname)
+    true
+  else
+    puts("Series directory #{series_dirname} already exists.")
+    false
+  end
+end
+
+def move_file(source,destination)
+  unless File.exists?(destination)
+    puts("Moving #{source} to #{destination}.")
+    FileUtils.mv(filename,destination)
+  else
+    puts("#{destination} already exists. Not moving #{source}.")
+  end
+end
+
 begin
   FileUtils.mkdir_p(LOG_DIR) unless File.exists?(LOG_DIR)
   logfile=File.join(LOG_DIR,LOG_FILE)
@@ -24,23 +45,24 @@ end
 Log.info {"#{$0} starting."}
 
 if ARGV.empty?
-  Log.error {"No files specified. Exiting"}
+  Log.error {"No files specified. Exiting."}
 else
   filename=ARGV[0].chomp
   filename=File.join(COMPLETED_DIR,filename) unless File.exists?(filename)
   if File.exists?(filename) then
     Log.info {"Analysing #{filename}."}
     test=Filename::normalize(filename,true)
-    prefix,series_name,season,episode,title=Filename::location(filename)
-    FileUtils.mkdir_p("#{DESTINATION}/#{prefix}/#{series_name}") unless File.exist?("#{DESTINATION}/#{prefix}/#{series_name}")
-    if episode.nil?
-      FileUtils.mv(filename,"#{DESTINATION}/#{prefix}/#{series_name}/#{test}") unless File.exist?("#{DESTINATION}/#{prefix}/#{series_name}/#{test}")
+    prefix,series_name,season,episode,title=Filename::location(test)
+    unless prefix.nil?
+      destination_directory=File.join(DESTINATION,prefix,series_name)
+      location=episode.nil? ? destination_directory : File.join(destination_directory,"Season#{season}")
+      create_directory(location)
+      move_file(filename,File.join(location,test))
     else
-      FileUtils.mkdir_p("#{DESTINATION}/#{prefix}/#{series_name}/Season#{season}") unless File.exist?("#{DESTINATION}/#{prefix}/#{series_name}/Season#{season}")
-      FileUtils.mv(filename,"#{DESTINATION}/#{prefix}/#{series_name}/Season#{season}/#{test}") unless File.exist?("#{DESTINATION}/#{prefix}/#{series_name}/Season#{season}/#{test}")
+      puts("Unable to determine type for #{filename}.")
     end
   else
-    Log.debug {"Unable to find file #{filename}"}
+    Log.debug {"Unable to find file #{filename}."}
   end unless filename.nil?
 end
 Log.info {"#{$0} completed."}

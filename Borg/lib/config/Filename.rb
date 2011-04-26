@@ -104,27 +104,38 @@ class Filename
       @programme_hash[programme_name]
     end
 
+    def get_year(series_name,season)
+      unless season.nil?
+        base_year=programme_find_year(series_name)
+        if base_year > 1800
+          prefix=[Time.now.year, base_year + (season.to_i>1) ? season.to_i-1 : 0].min
+          puts("Setting #{series_name} Season #{season} year to #{prefix}.")
+          prefix
+        else
+          puts("Unable to find a recent match for #{series_name}.")
+          nil
+        end
+      end
+    end
+
     def location(filename)
       file_type=type(filename)
       filename=normalize(filename,true)
-      fileparts=filename.split('_',2)
       regular_expressions.each do |k,v|
-        v.each do |reg|
-          reg.each do |r1,v1|
-            le=Regexp.new(r1,true)
-            if filename=~le
-              series_name,season,episode,title=$~[1..-1]
-              prefix='filing'
-              unless $2.nil?
-                prefix=programme_find_year($1)
-                prefix+=$2.to_i-1 if $2.to_i>1
+        if k==file_type
+          v.each do |reg|
+            reg.each do |r1, v1|
+              le=Regexp.new(r1, true)
+              if filename=~le
+                puts("Matched using regular expression (#{r1}).")
+                return [get_year($1,$2),$~[1..-1]].flatten
               end
-              return [prefix,$~[1..-1]].flatten
             end
           end
-        end if k==file_type
+        end
       end
-      [prefix,filename]
+      puts("Unable to find a pattern match for #{filename}")
+      [nil,filename]
     end
 
     def pre_titlecase(filename)
