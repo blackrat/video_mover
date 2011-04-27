@@ -159,7 +159,7 @@ class Filename
       end
       filename.downcase!
       filename.gsub!(/[_\.-]/," ")
-      filename.gsub!(/(.*)\,\s*(a|the)[\s_](.*)/i,'\2 \1 \3')
+#      filename.gsub!(/(.*)\,\s*(a|the)[\s_](.*)/i,'\2 \1 \3')
       filename=pre_titlecase(filename)
       filename=filename.titlecase
       filename=post_titlecase(filename)
