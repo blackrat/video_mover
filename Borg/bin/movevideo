@@ -37,10 +37,26 @@ class TVMover
     @destination_directory||=actual_directory
   end
 
+  def pad_integer(value)
+    begin
+      "%02d" % value
+    rescue
+      "00"
+    end
+  end
+
+  def season
+    pad_integer(@season)
+  end
+
+  def episode
+    pad_integer(@episode)
+  end
+
   def move
     unless @year.nil?
-      location=@episode.nil? ? destination_directory : File.join(destination_directory, "Season#{@season}")
-      move_to(File.join(location, "#{@series_name}_#{@season}x#{@episode}_#{@title}")) if create_directory(location)
+      location=@episode.nil? ? destination_directory : File.join(destination_directory, "Season#{season}")
+      move_to(File.join(location, "#{@series_name}_#{season}x#{episode}_#{@title}")) if create_directory(location)
     else
       Log.error{"Unable to determine series details for #{@filename}."}
     end

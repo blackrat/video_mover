@@ -25,12 +25,12 @@ module Config
     def config(*arr)
       arr.each do |file|
         meta_def(file) {
-          @cf=nil
+          cf=nil
           DIRECTORIES[:etc].each { |cd|
-            @cf=File.expand_path(File.join(cd,"#{file}#{CONFIG_EXT}"))
-            break if File.exists?(@cf)
-          } if @cf.nil?
-          File.exists?(@cf) ? (YAML.load_file(@cf)) : nil
+            cf=File.expand_path(File.join(cd,"#{file}#{CONFIG_EXT}"))
+            break if File.exists?(cf)
+          }
+          File.exists?(cf) ? (YAML.load_file(cf)) : nil
         }
       end
     end
