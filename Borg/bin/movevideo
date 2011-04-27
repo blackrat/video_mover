@@ -14,25 +14,63 @@ $:.unshift(File.join(File.dirname(__FILE__),'..','lib','config'))
 require 'Config'
 require 'Filename'
 
-def create_directory(series_dirname)
-  unless File.exists?(series_dirname)
-    puts("Creating series directory #{series_dirname}.")
-    FileUtils.mkdir_p(series_dirname)
+class TVMover
+  include Config
+  config :borg_params
+
+  def initialize(filename)
+    Log.info { "Analysing #{filename}." }
+    @filename=filename
+    @year, @series_name, @season, @episode, @title=Filename::location(filename)
+  end
+
+  def actual_directory
+    self.class.borg_params[:destinations].each do |directory|
+      return File.join(directory,"#{@year}",@series_name) if File.exists?(File.join(directory,"#{@year}"))
+    end
+    self.class.borg_params[:destinations].each do |directory|
+      return File.join(directory,"#{@year}",@series_name) if File.exists?(directory)
+    end
+  end
+
+  def destination_directory
+    @destination_directory||=actual_directory
+  end
+
+  def move
+    unless @year.nil?
+      location=@episode.nil? ? destination_directory : File.join(destination_directory, "Season#{@season}")
+      move_to(File.join(location, "#{@series_name}_#{@season}x#{@episode}_#{@title}")) if create_directory(location)
+    else
+      Log.error{"Unable to determine series details for #{@filename}."}
+    end
+  end
+
+  def create_directory(series_dirname)
+    unless File.exists?(series_dirname)
+      Log.debug{"Creating series directory #{series_dirname}."}
+      begin
+        FileUtils.mkdir_p(series_dirname)
+      rescue
+        Log.debug{"Failed to create series directory #{series_dirname}."}
+        return false
+      end
+    else
+      Log.debug{"Series directory #{series_dirname} already exists."}
+    end
     true
-  else
-    puts("Series directory #{series_dirname} already exists.")
-    false
+  end
+
+  def move_to(destination)
+    unless File.exists?(destination)
+      Log.info{"Moving #{@filename} to #{destination}."}
+      FileUtils.mv(@filename,destination)
+    else
+      Log.error{"#{destination} already exists. Not moving #{@filename}."}
+    end
   end
 end
 
-def move_file(source,destination)
-  unless File.exists?(destination)
-    puts("Moving #{source} to #{destination}.")
-    FileUtils.mv(filename,destination)
-  else
-    puts("#{destination} already exists. Not moving #{source}.")
-  end
-end
 
 begin
   FileUtils.mkdir_p(LOG_DIR) unless File.exists?(LOG_DIR)
@@ -47,22 +85,17 @@ Log.info {"#{$0} starting."}
 if ARGV.empty?
   Log.error {"No files specified. Exiting."}
 else
-  filename=ARGV[0].chomp
-  filename=File.join(COMPLETED_DIR,filename) unless File.exists?(filename)
-  if File.exists?(filename) then
-    Log.info {"Analysing #{filename}."}
-    test=Filename::normalize(filename,true)
-    prefix,series_name,season,episode,title=Filename::location(test)
-    unless prefix.nil?
-      destination_directory=File.join(DESTINATION,prefix,series_name)
-      location=episode.nil? ? destination_directory : File.join(destination_directory,"Season#{season}")
-      create_directory(location)
-      move_file(filename,File.join(location,test))
-    else
-      puts("Unable to determine type for #{filename}.")
+  ARGV.each do |y|
+    Dir.glob(y).each do |x|
+      filename=x.chomp
+      filename=File.join(COMPLETED_DIR,filename) unless File.exists?(filename)
+      next if File.directory?(filename)
+      if File.exists?(filename) then
+        TVMover.new(filename).move
+      else
+        Log.debug { "Unable to find file #{filename}." }
+      end
     end
-  else
-    Log.debug {"Unable to find file #{filename}."}
-  end unless filename.nil?
+  end
 end
 Log.info {"#{$0} completed."}

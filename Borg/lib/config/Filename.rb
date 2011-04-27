@@ -111,7 +111,7 @@ class Filename
       unless season.nil?
         base_year=programme_find_year(series_name)
         if base_year > 1800
-          prefix=[Time.now.year, base_year + (season.to_i>1) ? season.to_i-1 : 0].min
+          prefix=[Time.now.year, base_year + ((season.to_i>1) ? season.to_i-1 : 0)].min
           puts("Setting #{series_name} Season #{season} year to #{prefix}.")
           prefix
         else

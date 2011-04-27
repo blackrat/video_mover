@@ -1,0 +1,11 @@
+---
+:incoming:
+  - /vault/tv3/filing
+  - /Volumes/Current Television/filing
+:destinations:
+  -  /vault/tv3
+  -  /Volumes/Current Television
+  -  /vault/tv2
+  -  /Volumes/Recent Television
+  -  /vault/tv1
+  -  /Volumes/Television Archives
