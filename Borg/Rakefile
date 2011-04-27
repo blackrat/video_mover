@@ -3,7 +3,7 @@ require 'fileutils'
 libdir=$:.max
 LIBLIST=["Config.rb","String.rb","TitleCase.rb","withindex.rb","Filename.rb"]
 datadir="/etc/borg"
-DATALIST=["extensions.yml","extractions.yml","fixups.yml","regular_expressions.yml","replacements.yml"]
+DATALIST=["extensions.yml","extractions.yml","fixups.yml","regular_expressions.yml","replacements.yml","borg_params.yml"]
 bindir="/usr/local/bin"
 BINLIST=["movevideo","moveall"]
 
