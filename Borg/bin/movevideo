@@ -102,7 +102,7 @@ if ARGV.empty?
   Log.error {"No files specified. Exiting."}
 else
   ARGV.each do |y|
-    Dir.glob(y).each do |x|
+    Dir.glob(y.gsub(/\[/,'\[').gsub(/\]/,'\]')).each do |x|
       filename=x.chomp
       filename=File.join(COMPLETED_DIR,filename) unless File.exists?(filename)
       next if File.directory?(filename)
