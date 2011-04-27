@@ -37,6 +37,6 @@ module FileUtils
   end
 end
 
-FileUtils.getrealext("/Users/paul/Downloads/*").each do |x|
-  puts(x.inspect)
-end
+#FileUtils.getrealext("/Users/paul/Downloads/*").each do |x|
+#  puts(x.inspect)
+#end

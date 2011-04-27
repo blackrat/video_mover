@@ -55,7 +55,7 @@ class Filename
           reg.each do |r1,v1|
             le=Regexp.new(r1,true)
             if filename=~le
-              puts "Matched #{filename} with #{le} replacing with #{v1}."
+              Log.debug{"Matched #{filename} with #{le} replacing with #{v1}."}
               return filename.gsub(le,v1)
             end
           end
@@ -70,7 +70,7 @@ class Filename
         year=(doc.css("Data/Series/FirstAired").text).split('-')[0].to_i
         year
       rescue Exception=>e
-        puts(e)
+        Log.error(e)
         nil
       end
     end
@@ -87,7 +87,7 @@ class Filename
         details=YAML.load_file(VAULT_STORE)
         details[name]
       rescue Exception=>e
-        puts(e)
+        Log.error(e)
         nil
       end
     end
@@ -112,10 +112,10 @@ class Filename
         base_year=programme_find_year(series_name)
         if base_year > 1800
           prefix=[Time.now.year, base_year + ((season.to_i>1) ? season.to_i-1 : 0)].min
-          puts("Setting #{series_name} Season #{season} year to #{prefix}.")
+          Log.debug{"Setting #{series_name} Season #{season} year to #{prefix}."}
           prefix
         else
-          puts("Unable to find a recent match for #{series_name}.")
+          Log.error{"Unable to find a recent match for #{series_name}."}
           nil
         end
       end
@@ -130,14 +130,14 @@ class Filename
             reg.each do |r1, v1|
               le=Regexp.new(r1, true)
               if filename=~le
-                puts("Matched using regular expression (#{r1}).")
+                Log.debug{"Matched using regular expression (#{r1})."}
                 return [get_year($1,$2),$~[1..-1]].flatten
               end
             end
           end
         end
       end
-      puts("Unable to find a pattern match for #{filename}")
+      Log.error{"Unable to find a pattern match for #{filename}"}
       [nil,filename]
     end
 
@@ -154,9 +154,6 @@ class Filename
       file_type=:unknown
       if ext
         file_type=type(filename)
-        if file_type==:unknown
-          puts('break')
-        end
         actual_ext=File.extname(filename)
         filename=File.basename(filename,actual_ext)
       end
