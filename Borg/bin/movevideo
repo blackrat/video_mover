@@ -39,7 +39,7 @@ class TVMover
 
   def pad_integer(value)
     begin
-      "%02d" % value
+      "%02d" % value.to_i
     rescue
       "00"
     end
