@@ -73,6 +73,7 @@ class TVMover
       end
     else
       Log.debug{"Series directory #{series_dirname} already exists."}
+      FileUtils.touch(series_dirname)
     end
     true
   end

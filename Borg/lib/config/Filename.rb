@@ -51,17 +51,19 @@ class Filename
 
     def parse(filename,file_type)
       regular_expressions.each do |k,v|
-        v.each do |reg|
-          reg.each do |r1,v1|
-            le=Regexp.new(r1,true)
-            if filename=~le
-              Log.debug{"Matched #{filename} with #{le} replacing with #{v1}."}
-              return filename.gsub(le,v1)
+        v.each do |subtype,value|
+          value.each do |reg|
+            reg.each do |r1,v1|
+              le=Regexp.new(r1,true)
+              if filename=~le
+                Log.debug{"Matched #{filename} with #{le} replacing with #{v1}."}
+                return [filename.gsub(le,v1),:unknown]
+              end
             end
           end
         end if k==file_type
       end
-      filename
+      [filename,:unknown]
     end
 
     def get_from_thetvdb(name)
