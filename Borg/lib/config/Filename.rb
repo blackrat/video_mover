@@ -51,14 +51,12 @@ class Filename
 
     def parse(filename,file_type)
       regular_expressions.each do |k,v|
-        v.each do |subtype,value|
-          value.each do |reg|
-            reg.each do |r1,v1|
-              le=Regexp.new(r1,true)
-              if filename=~le
-                Log.debug{"Matched #{filename} with #{le} replacing with #{v1}."}
-                return [filename.gsub(le,v1),:unknown]
-              end
+        v.each do |reg|
+          reg.each do |r1,v1|
+            le=Regexp.new(r1,true)
+            if filename=~le
+              Log.debug{"Matched #{filename} with #{le} replacing with #{v1}."}
+              return [filename.gsub(le,v1),:unknown]
             end
           end
         end if k==file_type
@@ -174,7 +172,7 @@ class Filename
       filename.chomp!(" ")
       filename.gsub!(/ /,"_")
       filename.gsub!(/__/,"_")
-      filename=parse(filename,file_type)
+      filename=parse(filename,file_type)[0]
       filename+=actual_ext if ext
       filename
     end
