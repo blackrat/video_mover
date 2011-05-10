@@ -11,12 +11,9 @@
   - rm
   - mkv
   - m4v
+  - idx
+  - srt
+  - sub
 :audio:
   - mp3
   - mp2
-:subtitle:
-  - srt
-  - sub
-:delete:
-  - srr
-  - nfo
