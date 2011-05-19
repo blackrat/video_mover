@@ -62,6 +62,15 @@ class TVMover
     end
   end
 
+  def touch_tree(series_dirname)
+    tree=series_dirname.split('/')
+    parts=tree.size-1
+    parts.times do |count|
+      file_dirname=File.join(tree[0..count+1])
+      FileUtils.touch(file_dirname)
+    end
+  end
+
   def create_directory(series_dirname)
     unless File.exists?(series_dirname)
       Log.debug{"Creating series directory #{series_dirname}."}
@@ -73,7 +82,6 @@ class TVMover
       end
     else
       Log.debug{"Series directory #{series_dirname} already exists."}
-      FileUtils.touch(series_dirname)
     end
     true
   end
@@ -82,6 +90,7 @@ class TVMover
     unless File.exists?(destination)
       Log.info{"Moving #{@filename} to #{destination}."}
       FileUtils.mv(@filename,destination)
+      touch_tree(destination)
     else
       Log.error{"#{destination} already exists. Not moving #{@filename}."}
     end
