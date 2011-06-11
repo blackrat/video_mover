@@ -1,11 +1,14 @@
 ---
 :incoming:
-  - /vault/tv3/filing
-  - /Volumes/Current Television/filing
+  - /vault/tv4/filing
+  - /Volumes/Television_04/filing
 :destinations:
+  -  /vault/tv4
+  -  /Volumes/Television_04
   -  /vault/tv3
-  -  /Volumes/Current Television
+  -  /Volumes/Television_03
   -  /vault/tv2
-  -  /Volumes/Recent Television
+  -  /Volumes/Television_02
   -  /vault/tv1
-  -  /Volumes/Television Archives
+  -  /Volumes/Television_01
+ 

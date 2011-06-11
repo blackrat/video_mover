@@ -3,8 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="b9212594-0a9b-4789-bb3a-0f1510d2cf34" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Borg/etc/extractions.yml" afterPath="$PROJECT_DIR$/Borg/etc/extractions.yml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Borg/lib/config/Filename.rb" afterPath="$PROJECT_DIR$/Borg/lib/config/Filename.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Borg/etc/borg_params.yml" afterPath="$PROJECT_DIR$/Borg/etc/borg_params.yml" />
     </list>
     <ignored path="experimental_003.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -55,19 +54,28 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Filename.rb" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="Filename.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Borg/lib/config/Filename.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="162" column="0" selection-start="4306" selection-end="4306" vertical-scroll-proportion="0.5726257">
+            <state line="138" column="9" selection-start="3737" selection-end="3737" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Config.rb" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="borg_params.yml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Borg/etc/borg_params.yml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="4" column="0" selection-start="71" selection-end="71" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Config.rb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Borg/lib/config/Config.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="32" column="0" selection-start="872" selection-end="872" vertical-scroll-proportion="0.0">
+            <state line="32" column="0" selection-start="872" selection-end="872" vertical-scroll-proportion="0.55060726">
               <folding />
             </state>
           </provider>
@@ -101,7 +109,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/Borg/etc/borg_params.yml" />
         <option value="$PROJECT_DIR$/lib/config/archive_rebuild.rb" />
         <option value="$PROJECT_DIR$/Borg/lib/config/filetype.rb" />
         <option value="$PROJECT_DIR$/Borg/Rakefile" />
@@ -112,6 +119,7 @@
         <option value="$PROJECT_DIR$/Borg/bin/movevideo" />
         <option value="$PROJECT_DIR$/Borg/lib/config/Filename.rb" />
         <option value="$PROJECT_DIR$/Borg/etc/extractions.yml" />
+        <option value="$PROJECT_DIR$/Borg/etc/borg_params.yml" />
       </list>
     </option>
   </component>
@@ -233,8 +241,8 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Favorites" />
       <pane id="Scope" />
+      <pane id="Favorites" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -348,15 +356,14 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="22" width="1781" height="1109" extended-state="0" />
+    <frame x="2036" y="28" width="1781" height="1109" extended-state="0" />
     <editor active="false" />
     <layout>
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.26745328" sideWeight="0.991404" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3297244" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3297244" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1599317" sideWeight="0.7325467" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1599317" sideWeight="0.460177" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.539823" sideWeight="0.9890311" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32790446" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32874015" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -364,6 +371,7 @@
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3297244" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.26745328" sideWeight="0.991404" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3996063" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
@@ -436,11 +444,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Borg/lib/fuzzy.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Borg/lib/IMDB.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
@@ -481,37 +484,6 @@
         <state line="9" column="0" selection-start="126" selection-end="126" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file:///usr/local/lib/ruby/1.9.1/fileutils.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="1028" column="0" selection-start="30492" selection-end="30492" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Borg/etc/regular_expressions.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="51" selection-start="648" selection-end="648" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///usr/local/lib/ruby/1.9.1/logger.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="385" column="0" selection-start="11180" selection-end="11180" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Borg/lib/config/Config.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="32" column="0" selection-start="872" selection-end="872" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Borg/etc/extractions.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="0" selection-start="26" selection-end="26" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Borg/bin/movevideo">
       <provider selected="true" editor-type-id="text-editor">
         <state line="23" column="0" selection-start="570" selection-end="570" vertical-scroll-proportion="0.0">
@@ -519,9 +491,43 @@
         </state>
       </provider>
     </entry>
+    <entry file="file:///usr/local/lib/ruby/1.9.1/logger.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="385" column="0" selection-start="11180" selection-end="11180" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Borg/etc/regular_expressions.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="12" column="51" selection-start="648" selection-end="648" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Borg/etc/extractions.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="4" column="0" selection-start="26" selection-end="26" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file:///usr/local/lib/ruby/1.9.1/fileutils.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1028" column="0" selection-start="30492" selection-end="30492" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Borg/lib/config/Filename.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="162" column="0" selection-start="4306" selection-end="4306" vertical-scroll-proportion="0.5726257">
+        <state line="138" column="9" selection-start="3737" selection-end="3737" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Borg/etc/borg_params.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="4" column="0" selection-start="71" selection-end="71" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Borg/lib/config/Config.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="32" column="0" selection-start="872" selection-end="872" vertical-scroll-proportion="0.55060726">
           <folding />
         </state>
       </provider>
