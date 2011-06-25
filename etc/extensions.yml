@@ -1,0 +1,22 @@
+---
+:video:
+  - avi
+  - mp4
+  - mpg
+  - ogm
+  - swf
+  - mpeg
+  - vob
+  - wmv
+  - rm
+  - mkv
+  - m4v
+:audio:
+  - mp3
+  - mp2
+:subtitle:
+  - srt
+  - sub
+:delete:
+  - srr
+  - nfo

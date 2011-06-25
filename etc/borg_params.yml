@@ -1,0 +1,13 @@
+---
+:incoming:
+  - /vault/tv4/filing
+  - /Volumes/Television_04/filing
+:destinations:
+  -  /vault/tv4
+  -  /Volumes/Television_04
+  -  /vault/tv3
+  -  /Volumes/Television_03
+  -  /vault/tv2
+  -  /Volumes/Television_02
+  -  /vault/tv1
+  -  /Volumes/Television_01
