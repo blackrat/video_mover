@@ -54,12 +54,19 @@ class TVMover
   end
 
   def move
-    unless @year.nil?
+    if @year || try_directory_name
       location=@episode.nil? ? destination_directory : File.join(destination_directory, "Season#{season}")
       move_to(File.join(location, "#{@series_name}_#{season}x#{episode}_#{@title}")) if create_directory(location)
     else
       Log.error{"Unable to determine series details for #{@filename}."}
     end
+  end
+
+  def try_directory_name
+    extension=File.extname(@filename)
+    file_parts=@filename.split(/\//)
+    filename=File.join(file_parts[0..-2],"#{file_parts[-2]}#{extension}")
+    @year, @series_name, @season, @episode, @title=Filename::location(filename)
   end
 
   def touch_tree(series_dirname)
