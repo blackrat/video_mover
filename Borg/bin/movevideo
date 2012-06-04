@@ -54,7 +54,7 @@ class TVMover
   end
 
   def move
-    if @year || try_directory_name
+    if @year || (try_directory_name && @year)
       location=@episode.nil? ? destination_directory : File.join(destination_directory, "Season#{season}")
       move_to(File.join(location, "#{@series_name}_#{season}x#{episode}_#{@title}")) if create_directory(location)
     else
