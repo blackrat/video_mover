@@ -3,15 +3,15 @@ require 'rubygems'
 require 'yaml'
 require 'open-uri'
 require 'nokogiri'
-require 'borg_config'
-require 'string'
+require 'Config'
+require 'String'
 
 VAULT_STORE = File.expand_path("~/.borg/first_aired")
 
 class YearOutOfBounds < RuntimeError; end
 
 class Filename
-  include BorgConfig
+  include Config
   config :extensions, :regular_expressions, :extractions, :replacements, :fixups
 
   class << self
