@@ -1,8 +1,10 @@
 require File.join(File.dirname(__FILE__), 'borg')
+require 'logger'
 
 class VideoMover
   include Borg::Config
   config :borg_params
+
   class << self
     attr_accessor :logger
 
@@ -16,13 +18,14 @@ class VideoMover
       end
       filename
     end
+
+    def log
+      @logger||=Logger.new(STDOUT)
+    end
   end
 
   def log
-    self.class.logger||=begin
-      require 'logger'
-      Logger.new(STDOUT)
-    end
+    self.class.log
   end
 
   def initialize(filename)
