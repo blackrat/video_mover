@@ -61,15 +61,15 @@
 #    -- Hodges, John C. Hodges' Harbrace Handbook. 14th ed. Fort Worth:
 # Harcourt, 2001.
 
-$:.unshift(File.join(File.dirname(__FILE__),'..','..','lib')) unless $:.include?(File.join(File.dirname(__FILE__),'..','..','lib'))
-require "withindex.rb"
+$:.unshift(File.join(File.dirname(__FILE__), '..', '..', 'lib')) unless $:.include?(File.join(File.dirname(__FILE__), '..', '..', 'lib'))
+require "with_index.rb"
 
 module TitleCase
   # mix into String
 
-  ARTICLES = %w(a an the)
+  ARTICLES                  = %w(a an the)
   COORDINATING_CONJUNCTIONS = %w(and but for nor or so yet)
-  COMMON_PREPOSITIONS = %w(
+  COMMON_PREPOSITIONS       = %w(
     about beneath in regarding above beside inside round
     across between into since after beyond like through
     against by near to among concerning of toward
@@ -83,7 +83,7 @@ module TitleCase
   def icap # intelligent capitalization
     a = downcase
     if a =~ /^['"\(\[']*(\w)/
-      i = a.index($1)
+      i       = a.index($1)
       a[i, 1] = a[i, 1].upcase
     end
     a
@@ -96,16 +96,16 @@ module TitleCase
   def titlecase(exceptions = [])
     exclude = EXCEPTIONS + exceptions
 #Modification: The original split on word boundaries. We don't like spaces in filenames, so split on _
-    b = downcase.split(/\b/)
-    len = b.length
-    b.map_with_index {|w, i|
+    b       = downcase.split(/\b/)
+    len     = b.length
+    b.map_with_index { |w, i|
       if w.roman_numeral? or (w.length == 1 && b[i+1] == '.')
         w.upcase
         # always capitalize first and last words
       elsif i == 0 or i == len
         w.icap
         # don't capitalize the second half of words with apostrophes
-#Modification: Capitalize if the preceding work ends in a numeric value
+        #Modification: Capitalize if the preceding work ends in a numeric value
       elsif (exclude.include?(w) or (i>1) && b[i-1] == "'" && b[i-2] =~ /\w/) && (i>1 && b[i-1] =~ /\D\B/)
         w
       else
@@ -116,6 +116,7 @@ module TitleCase
 
   # taken from OZAWA Sakuro's Roman.pm
   ROMAN = /^(?:M{0,3})(?:D?C{0,3}|C[DM])(?:L?X{0,3}|X[LC])(?:V?I{0,3}|I[VX])$/i
+
   def roman_numeral?
     self =~ ROMAN ? true : false
   end

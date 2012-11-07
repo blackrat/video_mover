@@ -1,5 +1,9 @@
 ---
 :video:
+  - nfo
+  - srr
+  - srs
+  - sfv
   - avi
   - mp4
   - mpg
@@ -11,6 +15,10 @@
   - rm
   - mkv
   - m4v
+  - idx
+  - srt
+  - sub
+  - mp4
 :audio:
   - mp3
   - mp2
