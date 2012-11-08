@@ -22,6 +22,10 @@ class VideoMover
     def log
       @logger||=Logger.new(STDOUT)
     end
+
+    def move(filename)
+      self.new(filename).move
+    end
   end
 
   def log
@@ -34,7 +38,7 @@ class VideoMover
     @year, @series_name, @season, @episode, @title=Filename::location(filename)
   end
 
-  def for_all_destinations(&blk)
+  def for_all_destinations &blk
     self.class.borg_params[:destinations].each do |directory|
       yield directory
     end
@@ -116,7 +120,9 @@ class VideoMover
   end
 
   def create_directory(series_dirname)
-    unless File.exists?(series_dirname)
+    if File.exists?(series_dirname)
+      log.debug { "Series directory #{series_dirname} already exists." }
+    else
       log.debug { "Creating series directory #{series_dirname}." }
       begin
         FileUtils.mkdir_p(series_dirname)
@@ -124,19 +130,17 @@ class VideoMover
         log.error { "Failed to create series directory #{series_dirname}." }
         return false
       end
-    else
-      log.debug { "Series directory #{series_dirname} already exists." }
     end
     true
   end
 
   def move_to(destination)
-    unless File.exists?(destination)
+    if File.exists?(destination)
+      log.error { "#{destination} already exists. Not moving #{@filename}." }
+    else
       log.info { "Moving #{@filename} to #{destination}." }
       FileUtils.mv(@filename, destination)
       touch_tree(destination)
-    else
-      log.error { "#{destination} already exists. Not moving #{@filename}." }
     end
   end
 

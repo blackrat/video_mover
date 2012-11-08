@@ -14,12 +14,12 @@ begin
   logfile=File.join(LOG_DIR, LOG_FILE)
   VideoMover.set_logger(Logger.new(logfile, shift_age='weekly'))
 rescue => e
-  VideoMover.logger.error { e.message + ". Logging to stdout." }
+  VideoMover.log.error { e.message + ". Logging to stdout." }
 end
 
-VideoMover.logger.info { "#{$0} starting." }
+VideoMover.log.info { "#{$0} starting." }
 if ARGV.empty?
-  VideoMover.logger.error { "No files specified. Exiting." }
+  VideoMover.log.error { "No files specified. Exiting." }
 else
   ARGV.each do |y|
     Dir.glob(y.gsub(/\[/, '\[').gsub(/\]/, '\]')).each do |x|
@@ -27,11 +27,11 @@ else
       filename=VideoMover.find_incoming(filename) unless File.exists?(filename)
       next if File.directory?(filename)
       if File.exists?(filename) then
-        VideoMover.new(filename).move
+        VideoMover.move(filename)
       else
-        VideoMover.logger.error { "Unable to find file #{filename}." }
+        VideoMover.log.error { "Unable to find file #{filename}." }
       end
     end
   end
 end
-VideoMover.logger.info { "#{$0} completed." }
+VideoMover.log.info { "#{$0} completed." }

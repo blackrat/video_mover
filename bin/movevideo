@@ -1,2 +1,2 @@
 #!/bin/bash
-ruby./ movevideo.rb
+ruby./ movevideo.rb "$@"
