@@ -5,6 +5,7 @@
 $:.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 LOG_DIR ='/var/log/video_mover'
 LOG_FILE='video_mover.log'
+require 'fileutils'
 require 'rubygems'
 require "logger"
 require 'video_mover'
